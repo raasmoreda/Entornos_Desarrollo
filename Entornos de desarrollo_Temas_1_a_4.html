@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entornos de desarrollo · Temas 1 a 4</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f5f7fb;--card:#ffffff;--ink:#1e2433;--soft:#4b5565;--line:#d5dbe8;
+--c1:#1d4ed8;--b1:#e3ecff;--c2:#0f766e;--b2:#ddf6f1;--c3:#b45309;--b3:#fdeccf;--c4:#7e22ce;--b4:#f0e3ff;--key:#fff3a3;--keyink:#1e2433}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#151a26;--card:#1f2637;--ink:#eef1f8;--soft:#b6bfd2;--line:#38425a;
+--c1:#8fb0ff;--b1:#1f2c52;--c2:#5fd6c6;--b2:#15332f;--c3:#ffbf6b;--b3:#40290f;--c4:#d3a8ff;--b4:#33204d;--key:#5c4f00;--keyink:#fff7c2}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#151a26;--card:#1f2637;--ink:#eef1f8;--soft:#b6bfd2;--line:#38425a;--c1:#8fb0ff;--b1:#1f2c52;--c2:#5fd6c6;--b2:#15332f;--c3:#ffbf6b;--b3:#40290f;--c4:#d3a8ff;--b4:#33204d;--key:#5c4f00;--keyink:#fff7c2}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Verdana,Tahoma,"Trebuchet MS",sans-serif;font-size:1.08rem;line-height:1.8;letter-spacing:.02em;word-spacing:.12em;text-align:left}
+main{max-width:46rem;margin:0 auto;padding:1rem 1rem 4rem}
+h1{font-size:2rem;line-height:1.3;margin:1rem 0 .4rem}
+h2{font-size:1.6rem;line-height:1.3;margin:0 0 .8rem}
+h3{font-size:1.2rem;line-height:1.4;margin:1.6rem 0 .5rem}
+p{margin:.6rem 0;max-width:40rem}
+ul,ol{padding-left:1.4rem;margin:.6rem 0}
+li{margin:.45rem 0}
+.intro{color:var(--soft)}
+nav{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 2rem}
+nav a{padding:.5rem .9rem;border-radius:.7rem;text-decoration:none;font-weight:bold;color:var(--ink);border:2px solid var(--line);background:var(--card)}
+nav a:focus-visible,nav a:hover{outline:3px solid var(--ink)}
+section{background:var(--card);border-radius:1.2rem;border-top:.6rem solid var(--tc);padding:1.4rem 1.2rem 1.6rem;margin:0 0 2.4rem}
+#t1{--tc:var(--c1);--tb:var(--b1)}#t2{--tc:var(--c2);--tb:var(--b2)}#t3{--tc:var(--c3);--tb:var(--b3)}#t4{--tc:var(--c4);--tb:var(--b4)}
+section h2,section h3{color:var(--tc)}
+.num{display:inline-block;background:var(--tc);color:var(--card);border-radius:.6rem;padding:0 .6rem;margin-right:.4rem}
+.ess{background:var(--tb);border-radius:1rem;padding:.8rem 1.1rem;margin:1rem 0}
+.ess b.t{display:block;color:var(--tc);margin-bottom:.2rem}
+mark{background:var(--key);color:var(--keyink);padding:0 .25em;border-radius:.3em;font-weight:bold}
+.ana{border-left:.5rem solid var(--tc);padding:.2rem 0 .2rem 1rem;margin:1rem 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.9rem;margin:1rem 0}
+.box{background:var(--tb);border-radius:1rem;padding:.7rem 1rem}
+.box h4{margin:.1rem 0 .3rem;font-size:1.05rem;color:var(--tc)}
+.box p,.box ul{margin:.3rem 0;font-size:1rem;line-height:1.65}
+.ok,.no{display:block;margin:.3rem 0;font-size:1rem;line-height:1.6}
+.ok::before{content:"✔ ";color:#15803d;font-weight:bold}.no::before{content:"✘ ";color:#b91c1c;font-weight:bold}
+pre{background:#1b2133;color:#e8ecf7;border-radius:.9rem;padding:.9rem 1rem;overflow-x:auto;font:1rem/1.6 Consolas,"Courier New",monospace;letter-spacing:0;word-spacing:0;margin:.6rem 0}
+.k{color:#ffd479}.c{color:#8fd3a6}
+.fig{margin:1.2rem 0;text-align:center}
+.fig svg{max-width:100%;height:auto}
+.fig figcaption{font-size:.95rem;color:var(--soft)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;min-width:30rem;width:100%;font-size:1rem;line-height:1.6}
+th,td{border:2px solid var(--line);padding:.5rem .7rem;text-align:left;vertical-align:top}
+th{background:var(--tb);color:var(--ink)}
+.rec{border:3px dashed var(--tc);border-radius:1rem;padding:.7rem 1.1rem;margin-top:1.5rem}
+.rec b{color:var(--tc)}
+svg text{font-family:Verdana,Tahoma,sans-serif}
+@media print{body{background:#fff;color:#000}section{break-inside:auto;border:2px solid #999}nav{display:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Entornos de desarrollo</h1>
+<p class="intro">Temas 1 a 4</p>
+<nav aria-label="Temas">
+<a href="#t1">1 Software</a><a href="#t2">2 Lenguajes</a><a href="#t3">3 Ejecución</a><a href="#t4">4 Desarrollo</a>
+</nav>
+
+<!-- ========== TEMA 1 ========== -->
+<section id="t1">
+<h2><span class="num">1</span>Software y programas informáticos</h2>
+
+<div class="ess"><b class="t">Lo esencial</b>
+Un <mark>programa</mark> es una lista de instrucciones y datos que el ordenador sabe ejecutar. El <mark>software</mark> es el conjunto de programas y todo lo que los acompaña.</div>
+
+<h3>¿Qué es un programa?</h3>
+<p>Un programa combina dos cosas:</p>
+<ul><li><mark>Instrucciones</mark>: qué debe hacer el ordenador.</li><li><mark>Datos</mark>: con qué debe hacerlo.</li></ul>
+<div class="ana"><b>Una receta de cocina</b>
+<p>Los ingredientes son los datos. Los pasos son las instrucciones. El ordenador es el cocinero que sigue la receta al pie de la letra.</p></div>
+
+<h3>Programa ≠ software</h3>
+<p>El software es más grande que un programa. Incluye:</p>
+<ul><li>Los programas.</li><li>La documentación (manuales, ayuda).</li><li>Los archivos que usan (imágenes, iconos, configuración).</li></ul>
+
+<h3>Hardware, software y personas</h3>
+<figure class="fig">
+<svg viewBox="0 0 560 210" role="img" aria-label="Tres círculos: hardware, software y peopleware, unidos formando un sistema informático">
+<g text-anchor="middle">
+<circle cx="100" cy="100" r="85" fill="#bfdbfe"/><circle cx="280" cy="100" r="85" fill="#99f0e2"/><circle cx="460" cy="100" r="85" fill="#fde0a0"/>
+<text x="100" y="98" font-size="19" font-weight="bold" fill="#0b1b4d">Hardware</text><text x="100" y="122" font-size="14" fill="#0b1b4d">lo que se toca</text>
+<text x="280" y="98" font-size="19" font-weight="bold" fill="#032b27">Software</text><text x="280" y="122" font-size="14" fill="#032b27">lo que no se toca</text>
+<text x="460" y="98" font-size="19" font-weight="bold" fill="#4a2a00">Peopleware</text><text x="460" y="122" font-size="14" fill="#4a2a00">las personas</text>
+<text x="280" y="205" font-size="15" font-weight="bold" fill="currentColor">Juntos forman el sistema informático</text></g>
+</svg>
+<figcaption>Un sistema informático necesita las tres partes.</figcaption></figure>
+<p>El <mark>hardware</mark> sin software no sabe qué hacer. El software sin hardware no tiene dónde funcionar. El <mark>peopleware</mark> son las personas que crean y usan los sistemas.</p>
+
+<h3>Tipos de software según su función</h3>
+<div class="grid">
+<div class="box"><h4>De sistema</h4><p>Hace funcionar el equipo.</p><ul><li>Windows, Linux, macOS, Android</li><li>Controladores (drivers)</li></ul></div>
+<div class="box"><h4>De programación</h4><p>Sirve para crear programas.</p><ul><li>Editores, compiladores, depuradores</li><li>IDE: VS Code, IntelliJ</li></ul></div>
+<div class="box"><h4>De aplicación</h4><p>Resuelve tareas de las personas.</p><ul><li>Ofimática, navegador</li><li>WhatsApp, juegos</li></ul></div>
+</div>
+
+<h3>Tipos de software según su licencia</h3>
+<p>La <mark>licencia</mark> es el permiso que dice qué puedes hacer con un programa.</p>
+<div class="tw"><table>
+<tr><th>Tipo</th><th>Qué permite</th><th>Ejemplo</th></tr>
+<tr><td><b>Propietario</b></td><td>Se usa bajo las condiciones del fabricante. No puedes ver ni cambiar el código.</td><td>Windows, Photoshop</td></tr>
+<tr><td><b>Libre</b></td><td>Permite usarlo, estudiarlo, copiarlo y mejorarlo (las 4 libertades).</td><td>Linux, GIMP</td></tr>
+<tr><td><b>Código abierto</b></td><td>El código es visible. Es parecido al libre, con enfoque más técnico.</td><td>Firefox, VS Code (base)</td></tr>
+<tr><td><b>Freeware</b></td><td>Gratis, pero el código es cerrado.</td><td>Acrobat Reader</td></tr>
+<tr><td><b>Shareware / prueba</b></td><td>Lo pruebas un tiempo y luego pagas.</td><td>WinRAR</td></tr>
+<tr><td><b>SaaS (en la nube)</b></td><td>No lo instalas: lo usas por internet con suscripción.</td><td>Google Docs, Microsoft 365</td></tr>
+</table></div>
+<p>Licencias libres habituales: <mark>GPL</mark> (lo derivado debe seguir siendo libre) y <mark>MIT</mark> (muy permisiva).</p>
+
+<div class="rec"><b>Para recordar</b>
+<ul><li>Programa = instrucciones + datos.</li><li>Software = programas + documentación + archivos.</li><li>Tres funciones: sistema, programación, aplicación.</li><li>La licencia decide qué puedes hacer con él.</li></ul></div>
+</section>
+
+<!-- ========== TEMA 2 ========== -->
+<section id="t2">
+<h2><span class="num">2</span>Lenguajes de programación</h2>
+
+<div class="ess"><b class="t">Lo esencial</b>
+Un <mark>lenguaje de programación</mark> es un idioma con reglas muy estrictas para dar órdenes al ordenador. Se puede clasificar de varias formas, según lo que miremos.</div>
+
+<h3>Dos reglas de todo lenguaje</h3>
+<ul><li><mark>Sintaxis</mark>: cómo se escribe (como la ortografía).</li><li><mark>Semántica</mark>: qué significa lo escrito (como el sentido de una frase).</li></ul>
+
+<h3>Mapa de clasificaciones</h3>
+<figure class="fig">
+<svg viewBox="0 0 560 250" role="img" aria-label="Cinco formas de clasificar los lenguajes: nivel, generación, ejecución, paradigma y propósito">
+<rect x="195" y="10" width="170" height="50" rx="14" fill="#0f766e"/><text x="280" y="42" font-size="17" font-weight="bold" fill="#fff" text-anchor="middle">Lenguajes</text>
+<g font-size="14" font-weight="bold" text-anchor="middle">
+<rect x="5" y="130" width="100" height="70" rx="12" fill="#bfdbfe"/><text x="55" y="160" fill="#0b1b4d">Por nivel</text><text x="55" y="180" font-size="12" font-weight="normal" fill="#0b1b4d">¿cerca de quién?</text>
+<rect x="115" y="130" width="100" height="70" rx="12" fill="#fecaca"/><text x="165" y="160" fill="#5b0d0d">Generación</text><text x="165" y="180" font-size="12" font-weight="normal" fill="#5b0d0d">1G a 5G</text>
+<rect x="225" y="130" width="110" height="70" rx="12" fill="#fde68a"/><text x="280" y="160" fill="#4a2a00">Ejecución</text><text x="280" y="180" font-size="12" font-weight="normal" fill="#4a2a00">cómo corre</text>
+<rect x="345" y="130" width="100" height="70" rx="12" fill="#ddd6fe"/><text x="395" y="160" fill="#2e1065">Paradigma</text><text x="395" y="180" font-size="12" font-weight="normal" fill="#2e1065">forma de pensar</text>
+<rect x="455" y="130" width="100" height="70" rx="12" fill="#bbf7d0"/><text x="505" y="160" fill="#052e16">Propósito</text><text x="505" y="180" font-size="12" font-weight="normal" fill="#052e16">para qué sirve</text></g>
+<g stroke="#0f766e" stroke-width="3"><path d="M280 60V95M55 95H505M55 95V130M165 95V130M280 95V130M395 95V130M505 95V130" fill="none"/></g>
+</svg></figure>
+
+<h3>1. Por nivel de abstracción</h3>
+<div class="grid">
+<div class="box"><h4>Bajo nivel</h4><p><b>Lenguaje máquina</b>: solo 0 y 1. El procesador lo entiende directo.</p><p><b>Ensamblador</b>: palabras cortas como <code>MOV</code> o <code>ADD</code>.</p><span class="ok">Rápido y muy preciso</span><span class="no">Difícil y distinto en cada procesador</span></div>
+<div class="box"><h4>Alto nivel</h4><p>Se parece al lenguaje humano.</p><p>Python, Java, C#, JavaScript.</p><span class="ok">Fácil de leer y portable</span><span class="no">Necesita traducción</span></div>
+</div>
+<p>C se suele llamar de <mark>nivel medio</mark>: es de alto nivel, pero deja controlar la memoria.</p>
+
+<h3>2. Por generaciones</h3>
+<ol>
+<li><b>1G</b>: lenguaje máquina.</li><li><b>2G</b>: ensamblador.</li><li><b>3G</b>: alto nivel (C, Java, Python).</li><li><b>4G</b>: muy cerca del problema (SQL, generadores de informes).</li><li><b>5G</b>: basados en reglas y restricciones, ligados a la inteligencia artificial (Prolog).</li></ol>
+
+<h3>3. Por forma de ejecución</h3>
+<ul><li><mark>Compilados</mark>: se traducen enteros antes de ejecutar (C, C++, Rust).</li><li><mark>Interpretados</mark>: se traducen línea a línea mientras corren (Python, JavaScript).</li><li><mark>Con máquina virtual</mark>: se compilan a un código intermedio (Java, C#). Lo verás con detalle en el tema 3.</li></ul>
+
+<h3>4. Por paradigma (la forma de pensar)</h3>
+<p>Es la clasificación más importante. Hay dos grandes familias:</p>
+<div class="ana"><b>La pizza</b>
+<p><b>Imperativo</b>: le explicas al cocinero cada paso: «amasa, extiende, pon tomate, hornea 10 minutos».</p>
+<p><b>Declarativo</b>: solo pides el resultado: «una margarita, por favor». El cocinero decide cómo.</p></div>
+
+<h4 style="color:var(--tc)">Programación imperativa: «cómo»</h4>
+<p>Das <mark>órdenes en secuencia</mark> y guardas resultados en <mark>variables</mark> que van cambiando. Subtipos: estructurada, procedimental y orientada a objetos (la verás más adelante).</p>
+<p><b>Problema:</b> sumar los números pares del 1 al 10.</p>
+<pre><span class="c"># Python, estilo imperativo</span>
+total = 0                 <span class="c"># 1) empiezo en cero</span>
+<span class="k">for</span> n <span class="k">in</span> range(1, 11):   <span class="c"># 2) recorro del 1 al 10</span>
+    <span class="k">if</span> n % 2 == 0:        <span class="c"># 3) ¿es par?</span>
+        total = total + n <span class="c"># 4) lo sumo</span>
+print(total)              <span class="c"># resultado: 30</span></pre>
+<p>Fíjate: tú controlas el bucle, la condición y cómo cambia <code>total</code>.</p>
+
+<h4 style="color:var(--tc)">Programación declarativa: «qué»</h4>
+<p>Describes <mark>qué quieres obtener</mark> y el sistema decide cómo hacerlo. Casi no hay bucles ni variables que cambien.</p>
+<p><b>Ejemplo 1, funcional (Haskell):</b> el mismo problema.</p>
+<pre>sum [n | n &lt;- [1..10], even n]   <span class="c">-- resultado: 30</span></pre>
+<p>Se lee casi como una frase: «la suma de los n del 1 al 10 que sean pares».</p>
+<p><b>Ejemplo 2, bases de datos (SQL):</b> alumnos aprobados.</p>
+<pre><span class="k">SELECT</span> nombre <span class="k">FROM</span> alumnos <span class="k">WHERE</span> nota &gt;= 5;</pre>
+<p>No dices cómo buscar fila a fila. Solo pides qué quieres.</p>
+<p><b>Ejemplo 3, lógica (Prolog):</b> escribes hechos y reglas, y preguntas.</p>
+<pre>padre(juan, ana).
+padre(ana, luis).
+abuelo(X, Z) :- padre(X, Y), padre(Y, Z).
+<span class="c">?- abuelo(juan, Quien).   % Quien = luis</span></pre>
+<p>HTML y CSS también son declarativos: describen cómo debe verse una página, no los pasos para dibujarla.</p>
+
+<div class="tw"><table>
+<tr><th></th><th>Imperativo</th><th>Declarativo</th></tr>
+<tr><td><b>Pregunta</b></td><td>¿Cómo lo hago?</td><td>¿Qué quiero?</td></tr>
+<tr><td><b>Control</b></td><td>Lo llevas tú</td><td>Lo lleva el sistema</td></tr>
+<tr><td><b>Ejemplos</b></td><td>C, Java, Python</td><td>SQL, Haskell, Prolog, HTML</td></tr>
+</table></div>
+<p>Hoy muchos lenguajes son <mark>multiparadigma</mark>: Python mezcla ambos estilos.</p>
+
+<h3>5. Por propósito</h3>
+<ul><li><b>Propósito general</b>: sirven para casi todo (Python, Java).</li><li><b>Propósito específico</b>: hacen una tarea concreta (SQL para datos, HTML para webs, R para estadística).</li></ul>
+
+<div class="rec"><b>Para recordar</b>
+<ul><li>Cinco formas de clasificar: nivel, generación, ejecución, paradigma, propósito.</li><li>Imperativo = cómo. Declarativo = qué.</li><li>Un mismo lenguaje puede entrar en varias clasificaciones.</li></ul></div>
+</section>
+
+<!-- ========== TEMA 3 ========== -->
+<section id="t3">
+<h2><span class="num">3</span>Ejecución de programas</h2>
+
+<div class="ess"><b class="t">Lo esencial</b>
+El procesador solo entiende <mark>código máquina</mark>. Lo que escribimos (código fuente) hay que traducirlo. Se puede traducir <mark>todo de golpe</mark> (compilar) o <mark>poco a poco</mark> (interpretar).</div>
+
+<h3>Los tres códigos</h3>
+<ul>
+<li><mark>Código fuente</mark>: lo que escribes tú, en texto (por ejemplo <code>.py</code> o <code>.java</code>).</li>
+<li><mark>Código objeto</mark>: el resultado de traducirlo. Ya es binario, pero está incompleto.</li>
+<li><mark>Código ejecutable</mark>: el programa final listo para ejecutar (<code>.exe</code> en Windows).</li></ul>
+
+<h3>Camino 1: compilación</h3>
+<figure class="fig">
+<svg viewBox="0 0 580 130" role="img" aria-label="Código fuente, compilador, código objeto, enlazador con librerías y ejecutable">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#b45309"/></marker></defs>
+<g font-size="13" font-weight="bold" text-anchor="middle">
+<rect x="5" y="30" width="90" height="56" rx="12" fill="#bfdbfe"/><text x="50" y="55" fill="#0b1b4d">Código</text><text x="50" y="73" fill="#0b1b4d">fuente</text>
+<rect x="125" y="30" width="95" height="56" rx="12" fill="#fde68a"/><text x="172" y="63" fill="#4a2a00">Compilador</text>
+<rect x="250" y="30" width="90" height="56" rx="12" fill="#fecaca"/><text x="295" y="55" fill="#5b0d0d">Código</text><text x="295" y="73" fill="#5b0d0d">objeto</text>
+<rect x="370" y="30" width="90" height="56" rx="12" fill="#fde68a"/><text x="415" y="63" fill="#4a2a00">Enlazador</text>
+<rect x="490" y="30" width="85" height="56" rx="12" fill="#bbf7d0"/><text x="532" y="55" fill="#052e16">Ejecutable</text><text x="532" y="73" fill="#052e16">¡listo!</text>
+<rect x="370" y="98" width="90" height="26" rx="8" fill="#ddd6fe"/><text x="415" y="116" font-size="12" fill="#2e1065">Librerías</text></g>
+<g stroke="#b45309" stroke-width="3" fill="none" marker-end="url(#a)"><path d="M97 58H122M222 58H247M342 58H367M462 58H487M415 97V90"/></g>
+</svg></figure>
+<ol>
+<li>Escribes el <mark>código fuente</mark>.</li>
+<li>El <mark>compilador</mark> lo revisa y lo traduce a código objeto. Si hay errores de sintaxis, para aquí y te avisa.</li>
+<li>El <mark>enlazador</mark> une tu código objeto con las <mark>librerías</mark> (código ya hecho por otros, como el que muestra texto en pantalla).</li>
+<li>Se obtiene el <mark>ejecutable</mark>. Al abrirlo, el sistema operativo lo carga en memoria y la CPU lo ejecuta.</li></ol>
+<p>Dentro del compilador hay varias comprobaciones: leer las palabras (léxico), comprobar la gramática (sintáctico), comprobar el sentido (semántico), generar código y optimizarlo.</p>
+<div class="ana"><b>Traducir un libro</b>
+<p>Un traductor traduce el libro entero y lo imprime. Después cualquiera lo lee sin el traductor. Así funciona un compilador.</p></div>
+
+<h3>Camino 2: interpretación</h3>
+<p>El <mark>intérprete</mark> lee una línea, la traduce, la ejecuta y pasa a la siguiente. No se crea un ejecutable.</p>
+<div class="ana"><b>Intérprete en una conferencia</b>
+<p>Traduce frase a frase mientras la persona habla. Necesitas al intérprete cada vez.</p></div>
+
+<h3>Camino 3: máquina virtual</h3>
+<ol>
+<li>El compilador genera un <mark>código intermedio</mark> (en Java se llama <b>bytecode</b>).</li>
+<li>Una <mark>máquina virtual</mark> (JVM) lo ejecuta.</li>
+<li>Cada sistema tiene su propia máquina virtual, así que el mismo programa funciona en todos: «escribe una vez, ejecuta en cualquier sitio».</li></ol>
+<p>Las máquinas virtuales modernas usan <mark>JIT</mark> (just-in-time): traducen las partes más usadas a código máquina mientras el programa corre, para ir más rápido. Hoy los navegadores también ejecutan <b>WebAssembly</b>, un código intermedio muy rápido.</p>
+
+<h3>Comparativa</h3>
+<div class="tw"><table>
+<tr><th></th><th>Compilado</th><th>Interpretado</th><th>Máquina virtual</th></tr>
+<tr><td><b>Traduce</b></td><td>Todo antes</td><td>Línea a línea</td><td>A intermedio, luego ejecuta</td></tr>
+<tr><td><b>Velocidad</b></td><td>Muy alta</td><td>Menor</td><td>Alta</td></tr>
+<tr><td><b>Errores</b></td><td>Se ven antes de ejecutar</td><td>Aparecen al llegar a esa línea</td><td>Los dos casos</td></tr>
+<tr><td><b>Portable</b></td><td>Hay que recompilar</td><td>Sí, con el intérprete</td><td>Sí, con la máquina virtual</td></tr>
+<tr><td><b>Ejemplos</b></td><td>C, C++, Rust</td><td>Python, JavaScript</td><td>Java, C#</td></tr>
+</table></div>
+
+<div class="rec"><b>Para recordar</b>
+<ul><li>Fuente → objeto → ejecutable.</li><li>Compilar = todo antes. Interpretar = poco a poco.</li><li>Máquina virtual = camino intermedio y portable.</li></ul></div>
+</section>
+
+<!-- ========== TEMA 4 ========== -->
+<section id="t4">
+<h2><span class="num">4</span>Desarrollo de aplicaciones</h2>
+
+<div class="ess"><b class="t">Lo esencial</b>
+Crear una aplicación no es solo programar. Es un proceso con <mark>fases</mark>. Un <mark>modelo de desarrollo</mark> es la forma de organizar esas fases en el tiempo.</div>
+
+<h3>Las fases</h3>
+<ol>
+<li><mark>Análisis</mark>: ¿qué necesita el cliente? Se escriben los requisitos.</li>
+<li><mark>Diseño</mark>: ¿cómo lo organizamos? Pantallas, datos y estructura.</li>
+<li><mark>Codificación</mark>: se programa.</li>
+<li><mark>Pruebas</mark>: se busca y se arregla errores.</li>
+<li><mark>Documentación</mark>: manuales para usuarios y para programadores.</li>
+<li><mark>Explotación</mark>: se instala y se empieza a usar.</li>
+<li><mark>Mantenimiento</mark>: se corrigen fallos y se añaden mejoras.</li></ol>
+<div class="ana"><b>Construir una casa</b>
+<p>Hablas con la familia (análisis), haces los planos (diseño), construyes (codificación), compruebas que todo funciona (pruebas), das las llaves (explotación) y arreglas lo que falle (mantenimiento).</p></div>
+
+<h3>Modelos: ¿cómo se ordenan las fases?</h3>
+<p>No hay un modelo mejor que todos. Cada uno funciona mejor en ciertos casos.</p>
+
+<h3>Modelo en cascada</h3>
+<figure class="fig">
+<svg viewBox="0 0 560 330" role="img" aria-label="Siete fases en escalera descendente: análisis, diseño, codificación, pruebas, documentación, explotación o despliegue y mantenimiento">
+<g font-size="14" font-weight="bold" text-anchor="middle">
+<rect x="5" y="5" width="170" height="42" rx="10" fill="#bfdbfe"/><text x="90" y="31" fill="#0b1b4d">1 Análisis</text>
+<rect x="65" y="51" width="170" height="42" rx="10" fill="#bbf7d0"/><text x="150" y="77" fill="#052e16">2 Diseño</text>
+<rect x="125" y="97" width="170" height="42" rx="10" fill="#fde68a"/><text x="210" y="123" fill="#4a2a00">3 Codificación</text>
+<rect x="185" y="143" width="170" height="42" rx="10" fill="#fecaca"/><text x="270" y="169" fill="#5b0d0d">4 Pruebas</text>
+<rect x="245" y="189" width="170" height="42" rx="10" fill="#fbcfe8"/><text x="330" y="215" fill="#500724">5 Documentación</text>
+<rect x="305" y="235" width="170" height="42" rx="10" fill="#a5f3fc"/><text x="390" y="252" fill="#083344">6 Explotación</text><text x="390" y="269" font-size="12" font-weight="normal" fill="#083344">(despliegue)</text>
+<rect x="365" y="281" width="170" height="42" rx="10" fill="#ddd6fe"/><text x="450" y="307" fill="#2e1065">7 Mantenimiento</text></g>
+</svg>
+<figcaption>El agua cae por escalones y no sube. La explotación es instalar el programa y ponerlo a funcionar para los usuarios (despliegue).</figcaption></figure>
+<p><b>Cómo funciona:</b></p>
+<ol><li>Haces una fase <mark>completa</mark>.</li><li>Solo cuando termina y se revisa, pasas a la siguiente.</li><li>Cada fase entrega documentos que usa la siguiente.</li><li>El cliente ve el programa funcionando <mark>al final</mark>.</li></ol>
+<p><b>Ejemplo:</b> construir un puente. No empiezas a poner hormigón mientras aún dudas de los planos.</p>
+<span class="ok">Muy ordenado y fácil de planificar</span><span class="ok">Buena documentación</span>
+<span class="no">Si te equivocas al inicio, lo descubres tarde y cuesta mucho</span><span class="no">El cliente no puede cambiar de idea</span>
+<p><b>Cuándo usarlo:</b> requisitos muy claros y que no cambiarán.</p>
+<p><b>Variante, cascada con retroalimentación:</b> permite volver un escalón atrás si se detecta un error.</p>
+
+<h3>Modelo en V</h3>
+<figure class="fig">
+<svg viewBox="0 0 600 280" role="img" aria-label="Modelo en V: a la izquierda análisis, diseño general, diseño detallado; abajo codificación; a la derecha pruebas unitarias, de integración y de aceptación. Líneas de puntos unen cada fase con su prueba.">
+<defs><marker id="v" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#7e22ce"/></marker></defs>
+<g stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="6 6" fill="none"><path d="M180 32H420"/><path d="M230 102H370"/><path d="M280 172H320"/></g>
+<g stroke="#7e22ce" stroke-width="2.5" fill="none" marker-end="url(#v)"><path d="M95 54L145 80"/><path d="M145 124L195 150"/><path d="M195 194L240 220"/><path d="M360 220L405 194"/><path d="M405 150L455 124"/><path d="M455 80L505 54"/></g>
+<g font-size="13" font-weight="bold" text-anchor="middle">
+<rect x="10" y="10" width="170" height="44" rx="10" fill="#bfdbfe"/><text x="95" y="29" fill="#0b1b4d">Análisis de</text><text x="95" y="46" fill="#0b1b4d">requisitos</text>
+<rect x="60" y="80" width="170" height="44" rx="10" fill="#bbf7d0"/><text x="145" y="99" fill="#052e16">Diseño</text><text x="145" y="116" fill="#052e16">general</text>
+<rect x="110" y="150" width="170" height="44" rx="10" fill="#fde68a"/><text x="195" y="169" fill="#4a2a00">Diseño</text><text x="195" y="186" fill="#4a2a00">detallado</text>
+<rect x="215" y="220" width="170" height="44" rx="10" fill="#fecaca"/><text x="300" y="247" fill="#5b0d0d">Codificación</text>
+<rect x="320" y="150" width="170" height="44" rx="10" fill="#fde68a"/><text x="405" y="169" fill="#4a2a00">Pruebas</text><text x="405" y="186" fill="#4a2a00">unitarias</text>
+<rect x="370" y="80" width="170" height="44" rx="10" fill="#bbf7d0"/><text x="455" y="99" fill="#052e16">Pruebas de</text><text x="455" y="116" fill="#052e16">integración</text>
+<rect x="420" y="10" width="170" height="44" rx="10" fill="#bfdbfe"/><text x="505" y="29" fill="#0b1b4d">Pruebas de</text><text x="505" y="46" fill="#0b1b4d">aceptación</text></g>
+</svg>
+<figcaption>Bajas diseñando y subes probando. Las líneas de puntos unen cada fase con su prueba pareja.</figcaption></figure>
+<p><b>Cómo funciona:</b> es una cascada doblada en forma de V. El lado izquierdo es el de <mark>crear</mark> y el derecho es el de <mark>comprobar</mark>. Cada fase de la izquierda tiene su prueba pareja en la derecha:</p>
+<ul><li>Requisitos → <mark>pruebas de aceptación</mark>: ¿es lo que pidió el cliente?</li><li>Diseño general → <mark>pruebas de integración</mark>: ¿las partes encajan entre sí?</li><li>Diseño detallado → <mark>pruebas unitarias</mark>: ¿cada pieza funciona sola?</li></ul>
+<p><b>Paso a paso:</b></p>
+<ol>
+<li>Al bajar, cada vez que terminas una fase, <mark>preparas a la vez</mark> las pruebas de su pareja. Así sabes desde el principio cómo comprobarás el resultado.</li>
+<li>En el fondo de la V se programa.</li>
+<li>Al subir, se ejecutan las pruebas de lo pequeño a lo grande: primero cada pieza sola, luego las piezas juntas y por último el programa entero con el cliente.</li>
+<li>Si una prueba falla, sabes en qué fase buscar el error. Un fallo en las pruebas unitarias apunta al diseño detallado. Un fallo en la aceptación apunta a los requisitos.</li></ol>
+<p><b>Ejemplo largo: un cajero automático.</b></p>
+<ul>
+<li><b>Requisito:</b> «el cajero entrega exactamente el dinero que pido». <b>Prueba de aceptación:</b> el banco pide 50 € en un cajero real y comprueba que salen 50 €.</li>
+<li><b>Diseño general:</b> el cajero tiene módulos (lector de tarjeta, pantalla, dispensador de billetes). <b>Prueba de integración:</b> comprobar que, cuando la pantalla manda «dame 50 €», el dispensador lo recibe y responde.</li>
+<li><b>Diseño detallado:</b> una pieza calcula qué billetes dar. <b>Prueba unitaria:</b> con 70 €, ¿da un billete de 50 y uno de 20?</li></ul>
+<span class="ok">Los errores se encuentran pronto porque las pruebas se planifican desde el inicio</span><span class="ok">Muy fiable y controlado</span>
+<span class="no">Es rígido como la cascada: cambiar requisitos a mitad sale caro</span><span class="no">Hay mucho trabajo de preparación</span>
+<p><b>Cuándo usarlo:</b> programas donde un fallo es grave (salud, aviones, bancos, coches).</p>
+
+<h3>Modelo de prototipos</h3>
+<figure class="fig">
+<svg viewBox="0 0 620 160" role="img" aria-label="Idea del cliente, prototipo rápido, prueba del cliente. Si pide cambios vuelve al prototipo; si lo aprueba pasa al producto real.">
+<defs><marker id="p" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#7e22ce"/></marker></defs>
+<g font-size="14" font-weight="bold" text-anchor="middle">
+<rect x="10" y="25" width="120" height="55" rx="12" fill="#bfdbfe"/><text x="70" y="50" fill="#0b1b4d">Idea del</text><text x="70" y="68" fill="#0b1b4d">cliente</text>
+<rect x="170" y="25" width="120" height="55" rx="12" fill="#fde68a"/><text x="230" y="50" fill="#4a2a00">Prototipo</text><text x="230" y="68" fill="#4a2a00">rápido</text>
+<rect x="330" y="25" width="120" height="55" rx="12" fill="#fecaca"/><text x="390" y="50" fill="#5b0d0d">Prueba del</text><text x="390" y="68" fill="#5b0d0d">cliente</text>
+<rect x="490" y="25" width="120" height="55" rx="12" fill="#bbf7d0"/><text x="550" y="50" fill="#052e16">Producto</text><text x="550" y="68" fill="#052e16">real</text></g>
+<g stroke="#7e22ce" stroke-width="3" fill="none" marker-end="url(#p)"><path d="M132 52H167"/><path d="M292 52H327"/><path d="M452 52H487"/><path d="M390 84V120H230V84"/></g>
+<g font-size="13" text-anchor="middle" fill="currentColor"><text x="310" y="140">Pide cambios: se mejora el prototipo</text><text x="470" y="44" font-size="12">¡aprobado!</text></g>
+</svg>
+<figcaption>El prototipo se repite hasta que el cliente dice «esto es lo que quería».</figcaption></figure>
+<p><b>Cómo funciona:</b></p>
+<ol><li>Haces rápido una versión simple y sin detalles (el <mark>prototipo</mark>).</li><li>El cliente la prueba.</li><li>Comenta qué cambiaría.</li><li>Repites hasta que quedan claros los requisitos.</li><li>Entonces se construye el producto real.</li></ol>
+<p><b>Ejemplo:</b> el boceto de una app dibujado en papel o en Figma.</p>
+<span class="ok">Se entiende bien lo que quiere el cliente</span><span class="no">El prototipo «de mentira» a veces acaba usándose como producto final</span>
+
+<h3>Modelo incremental e iterativo</h3>
+<figure class="fig">
+<svg viewBox="0 0 560 170" role="img" aria-label="Tres entregas sucesivas, cada una añade una pieza al producto">
+<g font-size="14" font-weight="bold" text-anchor="middle">
+<rect x="10" y="100" width="150" height="60" rx="10" fill="#bfdbfe"/><text x="85" y="135" fill="#0b1b4d">Entrega 1</text>
+<rect x="190" y="70" width="150" height="90" rx="10" fill="#bbf7d0"/><text x="265" y="120" fill="#052e16">Entrega 2</text>
+<rect x="370" y="30" width="180" height="130" rx="10" fill="#fde68a"/><text x="460" y="100" fill="#4a2a00">Entrega 3</text></g>
+<text x="280" y="20" font-size="13" text-anchor="middle" fill="#7e22ce">Cada entrega añade funciones</text>
+</svg></figure>
+<p><b>Cómo funciona:</b></p>
+<ol><li>Divides el proyecto en <mark>partes pequeñas</mark> (incrementos).</li><li>Cada parte pasa por análisis, diseño, código y pruebas.</li><li>Entregas la primera: ya se puede usar.</li><li>Añades la siguiente sobre lo anterior.</li></ol>
+<p><b>Ejemplo:</b> una tienda online. Primero solo el catálogo, luego el carrito, luego el pago.</p>
+<span class="ok">El cliente recibe algo útil pronto</span><span class="no">Hay que diseñar bien la base para que las partes encajen</span>
+
+<h3>Modelo en espiral</h3>
+<figure class="fig">
+<svg viewBox="0 0 400 300" role="img" aria-label="Espiral con cuatro cuadrantes: objetivos, análisis de riesgos, desarrollo y pruebas, planificación">
+<rect x="20" y="10" width="180" height="140" fill="#bfdbfe"/><rect x="200" y="10" width="180" height="140" fill="#fecaca"/><rect x="20" y="150" width="180" height="140" fill="#fde68a"/><rect x="200" y="150" width="180" height="140" fill="#bbf7d0"/>
+<g font-size="14" font-weight="bold" fill="#1e2433" text-anchor="middle"><text x="110" y="35">1 Objetivos</text><text x="290" y="35">2 Riesgos</text><text x="110" y="278">4 Planificar</text><text x="290" y="278">3 Desarrollar y probar</text></g>
+<path d="M200 150 m0 -8 a8 8 0 0 1 8 8 a22 22 0 0 1 -22 22 a40 40 0 0 1 -40 -40 a62 62 0 0 1 62 -62 a85 85 0 0 1 85 85 a108 108 0 0 1 -108 108" fill="none" stroke="#7e22ce" stroke-width="4"/>
+</svg>
+<figcaption>Cada vuelta es más grande: el producto crece.</figcaption></figure>
+<p><b>Cómo funciona:</b> cada vuelta de la espiral repite cuatro pasos:</p>
+<ol><li><mark>Objetivos</mark>: qué vamos a conseguir en esta vuelta.</li><li><mark>Análisis de riesgos</mark>: qué puede salir mal y cómo evitarlo.</li><li><mark>Desarrollo y pruebas</mark>: se construye esa parte.</li><li><mark>Planificación</mark>: se decide qué hacer en la siguiente vuelta.</li></ol>
+<p>Lo diferente: <mark>los riesgos se miran en cada vuelta</mark>. Si un riesgo es demasiado grande, se puede parar el proyecto antes de gastar más.</p>
+<h4 style="color:var(--tc)">Ejemplo largo: una app para pedir cita en el centro de salud</h4>
+<p>Un centro de salud quiere una app para que sus pacientes pidan cita. El proyecto es delicado: se manejan datos médicos y muchos usuarios son personas mayores. Por eso se elige la espiral. Se construye en tres vueltas:</p>
+<div class="grid">
+<div class="box"><h4>Vuelta 1: la idea</h4><ol>
+<li><b>Objetivo:</b> que un paciente pueda pedir una cita.</li>
+<li><b>Riesgo:</b> los mayores no saben usar apps. Se prueba un boceto con 5 pacientes.</li>
+<li><b>Desarrollo:</b> una pantalla sencilla de prueba, sin datos reales.</li>
+<li><b>Planificar:</b> los pacientes lo entienden. Siguiente paso: conectar con las agendas.</li></ol></div>
+<div class="box"><h4>Vuelta 2: lo importante</h4><ol>
+<li><b>Objetivo:</b> conectar la app con la agenda real de los médicos.</li>
+<li><b>Riesgo:</b> dos personas piden la misma hora, o se filtran datos médicos.</li>
+<li><b>Desarrollo:</b> base de datos protegida y pruebas con dos usuarios pidiendo a la vez la misma hora.</li>
+<li><b>Planificar:</b> añadir avisos y versión para móvil.</li></ol></div>
+<div class="box"><h4>Vuelta 3: lanzamiento</h4><ol>
+<li><b>Objetivo:</b> recordatorios por SMS y puesta en marcha.</li>
+<li><b>Riesgo:</b> el servidor se cae a primera hora, cuando todos piden cita.</li>
+<li><b>Desarrollo:</b> pruebas simulando 1000 usuarios a la vez.</li>
+<li><b>Planificar:</b> instalar en el centro y dejar un plan de mantenimiento.</li></ol></div>
+</div>
+<p><b>Punto clave:</b> si en la vuelta 2 se descubriera que no se pueden proteger los datos médicos, el centro podría <mark>parar el proyecto</mark> antes de gastar más dinero. Eso es lo que aporta la espiral: decidir con los riesgos a la vista.</p>
+<span class="ok">Muy bueno para proyectos grandes y arriesgados</span><span class="no">Caro y exige expertos en riesgos</span>
+
+<h3>Metodologías ágiles (Scrum)</h3>
+<p>Son hoy las más usadas. Se basan en <mark>entregar poco y a menudo</mark>, hablando siempre con el cliente.</p>
+<p><b>Los roles de Scrum (quién es quién):</b></p>
+<div class="grid">
+<div class="box"><h4>Product Owner</h4><p>«Dueño del producto». Habla en nombre del cliente y decide qué es lo más importante del backlog.</p></div>
+<div class="box"><h4>Scrum Master</h4><p>Ayuda al equipo a seguir Scrum y <mark>quita los obstáculos</mark> (por ejemplo, un permiso que falta). No es el jefe y no reparte tareas.</p></div>
+<div class="box"><h4>Development Team</h4><p>«Equipo de desarrollo»: de 3 a 9 personas que diseñan, programan y prueban. Se organizan solas.</p></div>
+</div>
+<p><b>Las reuniones de Scrum:</b></p>
+<div class="tw"><table>
+<tr><th>Nombre en inglés</th><th>En español</th><th>Cuándo y para qué</th></tr>
+<tr><td><b>Sprint Planning</b></td><td>Planificación del sprint</td><td>Al empezar. El equipo elige qué tareas hará.</td></tr>
+<tr><td><b>Daily Scrum</b> (o daily stand-up)</td><td>Reunión diaria</td><td>Cada día, 15 minutos, de pie. Qué hice, qué haré, qué me bloquea.</td></tr>
+<tr><td><b>Sprint Review</b></td><td>Revisión del sprint</td><td>Al final. Se enseña al cliente lo que funciona.</td></tr>
+<tr><td><b>Sprint Retrospective</b></td><td>Retrospectiva</td><td>Tras la review. El equipo piensa cómo trabajar mejor.</td></tr>
+</table></div>
+<p><b>Cómo funciona Scrum:</b></p>
+<ol>
+<li>El Product Owner hace una lista de todo lo que quiere el cliente: el <mark>Product Backlog</mark>.</li>
+<li>En la <mark>Sprint Planning</mark> el equipo elige unas pocas tareas para un <mark>sprint</mark> (una carrera corta de 2 a 4 semanas).</li>
+<li>Cada día hay una <mark>Daily Scrum</mark> de 15 minutos. El Scrum Master ayuda a resolver lo que bloquea a alguien.</li>
+<li>Al final, en la <mark>Sprint Review</mark>, se enseña <mark>algo que funciona</mark> al cliente y él opina.</li>
+<li>El equipo hace la <mark>Sprint Retrospective</mark> para mejorar. Se ajusta la lista y empieza otro sprint.</li></ol>
+<figure class="fig">
+<svg viewBox="0 0 520 150" role="img" aria-label="Ciclo Scrum: backlog, sprint, entrega, opinión del cliente y vuelta a empezar">
+<defs><marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#7e22ce"/></marker></defs>
+<g font-size="13" font-weight="bold" text-anchor="middle">
+<rect x="5" y="30" width="100" height="50" rx="12" fill="#bfdbfe"/><text x="55" y="60" fill="#0b1b4d">Backlog</text>
+<rect x="140" y="30" width="110" height="50" rx="12" fill="#fde68a"/><text x="195" y="60" fill="#4a2a00">Sprint</text>
+<rect x="285" y="30" width="100" height="50" rx="12" fill="#bbf7d0"/><text x="335" y="60" fill="#052e16">Entrega</text>
+<rect x="415" y="30" width="100" height="50" rx="12" fill="#fecaca"/><text x="465" y="53" fill="#5b0d0d">Opinión</text><text x="465" y="70" fill="#5b0d0d">cliente</text></g>
+<g stroke="#7e22ce" stroke-width="3" fill="none" marker-end="url(#b)"><path d="M107 55H137M252 55H282M387 55H412"/><path d="M465 84V125H55V84"/></g>
+</svg></figure>
+<p><b>Ejemplo:</b> una app de reparto. En 3 semanas ya se pueden hacer pedidos (aunque sin pagos). El cliente la prueba y pide cambios antes de seguir.</p>
+<span class="ok">Se adapta a cambios y el cliente participa</span><span class="no">Exige equipo comprometido y buena comunicación</span>
+<p>Otras metodologías ágiles: <b>Kanban</b> (tablero de tareas «por hacer / haciendo / hecho») y <b>XP</b> (Extreme Programming, con programación en parejas).</p>
+
+<h3>Resumen: ¿cuál elijo?</h3>
+<div class="tw"><table>
+<tr><th>Modelo</th><th>Idea en una frase</th><th>Úsalo cuando…</th></tr>
+<tr><td><b>Cascada</b></td><td>Una fase tras otra, sin volver atrás</td><td>Los requisitos son claros y fijos</td></tr>
+<tr><td><b>V</b></td><td>Cada fase tiene su prueba</td><td>Un fallo es muy grave</td></tr>
+<tr><td><b>Prototipos</b></td><td>Enseñar un borrador al cliente</td><td>El cliente no sabe bien qué quiere</td></tr>
+<tr><td><b>Incremental</b></td><td>Entregar por trozos</td><td>Quieres resultados pronto</td></tr>
+<tr><td><b>Espiral</b></td><td>Vueltas con control de riesgos</td><td>Proyecto grande y arriesgado</td></tr>
+<tr><td><b>Ágil (Scrum)</b></td><td>Sprints cortos y feedback continuo</td><td>Los requisitos cambian</td></tr>
+</table></div>
+
+<div class="rec"><b>Para recordar</b>
+<ul><li>Fases: análisis, diseño, código, pruebas, documentación, explotación, mantenimiento.</li><li>Cascada: una vez y en orden.</li><li>Los demás modelos repiten el ciclo para aprender y corregir antes.</li><li>Ágil: poco, pronto y con el cliente.</li></ul></div>
+</section>
+</main>
+</body>
+</html>
